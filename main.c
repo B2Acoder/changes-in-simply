@@ -7,7 +7,7 @@
  */
 int main(void)
 {
-	prompt_design();
+	prompt_loop();
 
 	return (0);
 }

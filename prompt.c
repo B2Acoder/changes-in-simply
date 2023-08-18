@@ -9,7 +9,7 @@
  */
 int prompt_design(void)
 {
-	char *prompt = "<3\n ";
+	char *prompt = "<3 ";
 	
 	write(STDOUT_FILENO, prompt, 3);
 	return (0);
