@@ -7,6 +7,13 @@
  */
 bool file_exists(const char *p)
 {
-	struct stat buff;
-	return (stat(p, &buff) == 0);
+	struct stat buff;/*this struct stores infor about the file like size*/
+	if (stat(p, &buff) == 0)
+	{
+		return True;/*means the file exits*/
+	}
+	else
+	{
+		return false;/*the files doesnot exit*/
+	}
 }

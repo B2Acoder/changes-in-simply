@@ -12,8 +12,8 @@
 
 int prompt_design(void);
 char *user_readinput(void);
-void execute_executable(const char *executable_path);
-void execute_command(char *c);
+void execute_executable(char *executable_path);
+void execute_command(char *command_path);
 bool file_exists(const char *p);
 int prompt_loop(void);
 
