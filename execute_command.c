@@ -4,48 +4,51 @@
  * execute_executable - This function forks a new process, using 'execve'
  *			to execute the provided executable path and waiting
  *				for the child process to complete.
- * @*executable_path: The path to the executable
+ * @executable_path: The path to the executable
  * Return: (void)
  */
-void execute_executable(const char *executable_path)
+void execute_executable(char *executable_path)
 {
-	pid_t child;
+	pid_t childprocess; /*stores thes pid*/
 
-	child = fork();
-	
-	if (child < 0)
+	childprocess = fork(); /*creates a new process*/
+	/*the pid starts executing*/
+	if (childprocess < 0)/*checks the return value*/
 	{
 		perror("Fork error");
 	}
-	else if (child == 0)
+	else if (childprocess == 0)/*the new process starts here*/
 	{
-		extern char **environ;
-		char *args[] = {(char *)executable_path, NULL};
-		if (execve(executable_path, args, environ) == -1)
+		char *args[] = {executable_path, NULL};
+
+		if (execve(executable_path, args, NULL) == -1)
+			/*replaces the current process with new process*/
 		{
 			perror("</3 ");
-			exit(EXIT_FAILURE);
-		}
-
-		else
-		{
-			wait(NULL);
+			exit(EXIT_FAILURE);/*exits the pid with failure*/
 		}
 	}
+	else/*executes in the ppid*/
+	{
+		wait(NULL);/*wait for the pid to complete*/
+	}
 }
+
+/*this function check whether a file with that path exists*/
 
 /**
  * execute_command - This function takes a command as input and checks if the
  *			command starts with "/"
  *
- * @*c: The string representing the command
+ * @command_path: The string representing the command
  * Return: void
  */
-void execute_command(char *c)
+void execute_command(char *command_path)
 {
-	if (c[0] == '/' && file_exists(c))
+	if (command_path[0] == '/' && file_exists(command_path))
+		/*checks if the first char of the string is a forward slash*/
 	{
-		execute_executable(c);
+		execute_executable(command_path);
 	}
 	else
 	{
