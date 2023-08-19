@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <unistd.h>
 #include "main.h"
 
 /**
@@ -10,7 +8,7 @@
 int prompt_design(void)
 {
 	char *prompt = "<3 ";
-	
+
 	write(STDOUT_FILENO, prompt, 3);
 	return (0);
 }

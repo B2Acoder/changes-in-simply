@@ -45,11 +45,16 @@ void execute_executable(char *executable_path)
  */
 void execute_command(char *command_path)
 {
-	if (command_path[0] == '/' && file_exists(command_path))
+	if (command_path[0] == '/')
 		/*checks if the first char of the string is a forward slash*/
 	{
-		execute_executable(command_path);
+		struct stat file_path;
+		if (file_exists(command_path, &file_path))
+		{
+			execute_executable(command_path);
+		}
 	}
+
 	else
 	{
 		printf("</3: No such file or directory\n");

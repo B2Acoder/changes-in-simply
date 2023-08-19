@@ -2,7 +2,7 @@
 
 /**
  * prompt_loop - This file loops the shell and handles the end-of-file
- * 	condition
+ *	condition
  * Return: Always 0 (Success)
  */
 int prompt_loop(void)

@@ -12,10 +12,16 @@ char *user_readinput(void)
 	ssize_t read_size;
 
 	read_size = getline(&input, &input_size, stdin);
-	if (read_size == -1 || read_size == EOF)
+
+	if (read_size == -1 || input[0] == EOF)
 	{
 		free(input);
 		return (NULL);
+	}
+
+	if (input[read_size - 1] == '\n')
+	{
+		input[read_size - 1] = '\0';
 	}
 
 	return (input);
