@@ -1,13 +1,13 @@
 #include "main.h"
 
 /**
- * main -  Checks the code
+ * main - checks the code
  *
- * Return: Always 0 (Success)
+ * Return: Always 0
  */
+
 int main(void)
 {
 	prompt_loop();
-
 	return (0);
 }
