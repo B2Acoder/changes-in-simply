@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * prompt_loop - This file loops the shell and handles the end-of-file

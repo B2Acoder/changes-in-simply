@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * file_exists - This function checks if a file exists at a given path
