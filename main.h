@@ -16,5 +16,7 @@ void execute_executable(char *executable_path);
 void execute_command(char *command_path);
 bool file_exists(const char *p, struct stat *buff);
 int prompt_loop(void);
+char **parse_args(char *user_input);
+void execute_commandargs(char *user_input, char **args);
 
 #endif
