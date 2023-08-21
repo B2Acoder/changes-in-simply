@@ -3,15 +3,26 @@
 /**
  * execute_commandargs - this functions handles commands with args
  * @user_input - the user input contains commands followed by args
+ * @args - an array of command arguments
  * Return: void
  */
 
 void execute_commandargs(char *user_input, char **args)
 {
+	char *command = args[0];
 
-	if (args != NULL)
+	if (args != NULL && args[0] != NULL)
 	{
-		if (args[0] != NULL)
+		*command = args[0];
+		if (strcmp(command, "exit") == 0)/*we compare the command with other special commands*/
+		{
+			exit(0);
+		}
+		else
+		{
+			(strcmp(command, "cd") == 0)
+		}
+		else
 		{
 			execute_commandargs(user_input, args);
 		}
@@ -19,10 +30,6 @@ void execute_commandargs(char *user_input, char **args)
 		{
 			printf("Error: No such command\n");
 		}
-	}
-	else
-	{
-		printf("</3: No such file or directory\n");
 	}
 	free(args);
 }
