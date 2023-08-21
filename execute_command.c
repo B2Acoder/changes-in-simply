@@ -49,7 +49,7 @@ void execute_command(char *command_path)
 		/*checks if the first char of the string is a forward slash*/
 	{
 		struct stat file_path;
-		if (file_exists(command_path, &file_path))
+		if (file_exists(command_path))
 		{
 			execute_executable(command_path);
 		}
