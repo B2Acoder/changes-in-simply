@@ -7,6 +7,8 @@
  */
 int prompt_loop(void)
 {
+	int k = 0;
+
 	while (1)
 	{
 		prompt_design();
@@ -19,12 +21,32 @@ int prompt_loop(void)
 			break;
 		}
 
-		input[strcspn(input, "\n")] = '\0';
+		char **args = parse_args(input);
 
-		execute_command(input);
+		if (args != NULL && args[0] != NULL)
+		{
+			if (strcmp(args[0], "exit") == 0)
+			{
+				execute_commandargs(input, args);
+			}
+			else if(strcmp(args[0], "cd") == 0)
+			{
+				execute_commandargs(input, args);
+			}
+			else
+			{
+				execute_command(input);
+			}
+		}
 
+		for (k = 0; args[k] != NULL; k++)
+		{
+			free(args[k]);
+		}
+
+		free(args);
 		free(input);
 	}
-
+	
 	return (0);
 }

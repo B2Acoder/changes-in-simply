@@ -13,7 +13,7 @@ char *user_readinput(void)
 
 	read_size = getline(&input, &input_size, stdin);
 
-	if (read_size == -1 || input[0] == EOF)
+	if (read_size == -1)
 	{
 		free(input);
 		return (NULL);
