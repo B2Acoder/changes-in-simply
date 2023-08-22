@@ -11,6 +11,7 @@
 void execute_executable(char *executable_path, char **args)
 {
 	int status;
+	extern char **environ;
 	pid_t childprocess; /*stores thes pid*/
 
 	childprocess = fork(); /*creates a new process*/
@@ -22,16 +23,13 @@ void execute_executable(char *executable_path, char **args)
 	}
 	else if (childprocess == 0)/*the new process starts here*/
 	{
-		if (execve(executable_path, args, NULL) == -1)
-			/*replaces the current process with new process*/
-		{
-			perror("execve error for command: ");
-			exit(EXIT_FAILURE);/*exits the pid with failure*/
-		}
+		execve(executable_path, args, environ);
+		perror("</3: ");
+		exit(EXIT_FAILURE);
 	}
 	else/*executes in the ppid*/
 	{
-		waitpid(childprocess, &status, 0);
+		wait(&status);
 	}
 }
 
@@ -44,16 +42,33 @@ void execute_executable(char *executable_path, char **args)
 void execute_command(char *command_path)
 {
 	int index;
+	char *executablepath;
 	char **arguments = tokenize_commandargs(command_path);
+	char *args = arguments[0];
 
-	if(arguments[0] != NULL)
+	if (strcmp(args, "exit") == 0)
 	{
-		execute_executable(arguments[0], arguments);
+		shell_exit();
+	}
+	else if (strcmp(args, "env") == 0)
+	{
+		print_env();
 	}
 	else
 	{
-		printf("No command provided\n");
+		executablepath = find_exe(args);
+
+		if (executablepath != NULL)
+		{
+			execute_executable(executablepath, arguments);
+			free(executablepath);
+		}
+		else
+		{
+			printf("</3: %s: command not found\n", args);
+		}
 	}
+
 	for (index = 0; arguments[index] != NULL; index++)
 	{
 		free(arguments[index]);

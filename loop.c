@@ -7,46 +7,45 @@
  */
 int prompt_loop(void)
 {
-	int k = 0;
+	FILE *fileinput = fopen("input.txt", "r");
+	char *f_input;
 
 	while (1)
 	{
-		prompt_design();
-
-		char *input = user_readinput();
-
-		if (input == NULL)
+		if (is_interactive_mode())
 		{
-			printf("\n");
-			break;
-		}
+			prompt_design();
 
-		char **args = parse_args(input);
+			char *input = user_readinput();
 
-		if (args != NULL && args[0] != NULL)
-		{
-			if (strcmp(args[0], "exit") == 0)
+			if (input == NULL)
 			{
-				execute_commandargs(input, args);
+				printf("\n");
+				break;
 			}
-			else if(strcmp(args[0], "cd") == 0)
-			{
-				execute_commandargs(input, args);
-			}
-			else
+			if (strlen(input) > 0)
 			{
 				execute_command(input);
 			}
-		}
 
-		for (k = 0; args[k] != NULL; k++)
+			free(input);
+		}
+		else
 		{
-			free(args[k]);
-		}
+			f_input = read_fileinput(fileinput);
 
-		free(args);
-		free(input);
+			if (f_input == NULL)
+			{
+				printf("\n");
+				break;
+			}
+
+			if (strlen(f_input) > 0)
+			{
+				execute_command(f_input);
+			}
+			fclose(fileinput);
+			free(f_input);
+		}
 	}
-	
-	return (0);
 }
