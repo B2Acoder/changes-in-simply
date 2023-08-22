@@ -12,8 +12,10 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 
+int is_interactive_mode(void);
 int prompt_design(void);
 char *user_readinput(void);
+char *read_fileinput(char *file_input);
 void execute_executable(char *executable_path);
 void execute_command(char *command_path);
 bool file_exists(const char *p);
