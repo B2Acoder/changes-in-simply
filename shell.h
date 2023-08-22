@@ -15,12 +15,12 @@
 int is_interactive_mode(void);
 int prompt_design(void);
 char *user_readinput(void);
-char *read_fileinput(char *file_input);
-void execute_executable(char *executable_path);
+char *read_fileinput(FILE *file_input);
+void execute_executable(char *executable_path, char **args);
 void execute_command(char *command_path);
 bool file_exists(const char *p);
 int prompt_loop(void);
 char **parse_args(char *user_input);
 void execute_commandargs(char *user_input, char **args);
-
+char **tokenize_commandargs(char *command);
 #endif

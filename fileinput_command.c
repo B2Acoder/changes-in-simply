@@ -6,7 +6,7 @@
  * @file_input: File pointer
  * Return: command
  */
-char *read_fileinput(char *file_input)
+char *read_fileinput(FILE *file_input)
 {
 	size_t buffer_size = 0;
 	char *command = NULL;
