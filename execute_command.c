@@ -5,10 +5,12 @@
  *			to execute the provided executable path and waiting
  *				for the child process to complete.
  * @executable_path: The path to the executable
+ * @args: 
  * Return: (void)
  */
-void execute_executable(char *executable_path)
+void execute_executable(char *executable_path, char **args)
 {
+	int status;
 	pid_t childprocess; /*stores thes pid*/
 
 	childprocess = fork(); /*creates a new process*/
@@ -16,47 +18,45 @@ void execute_executable(char *executable_path)
 	if (childprocess < 0)/*checks the return value*/
 	{
 		perror("Fork error");
+		exit(EXIT_FAILURE);
 	}
 	else if (childprocess == 0)/*the new process starts here*/
 	{
-		char *args[] = {executable_path, NULL};
-
 		if (execve(executable_path, args, NULL) == -1)
 			/*replaces the current process with new process*/
 		{
-			perror("</3 ");
+			perror("execve error for command: ");
 			exit(EXIT_FAILURE);/*exits the pid with failure*/
 		}
 	}
 	else/*executes in the ppid*/
 	{
-		wait(NULL);/*wait for the pid to complete*/
+		waitpid(childprocess, &status, 0);
 	}
 }
 
-/*this function check whether a file with that path exists*/
-
 /**
- * execute_command - This function takes a command as input and checks if the
- *			command starts with "/"
+ * execute_command - This function executes command entered by the user
  *
  * @command_path: The string representing the command
  * Return: void
  */
 void execute_command(char *command_path)
 {
-	if (command_path[0] == '/')
-		/*checks if the first char of the string is a forward slash*/
-	{
-		struct stat file_path;
-		if (file_exists(command_path))
-		{
-			execute_executable(command_path);
-		}
-	}
+	int index;
+	char **arguments = tokenize_commandargs(command_path);
 
+	if(arguments[0] != NULL)
+	{
+		execute_executable(arguments[0], arguments);
+	}
 	else
 	{
-		printf("</3: No such file or directory\n");
+		printf("No command provided\n");
 	}
+	for (index = 0; arguments[index] != NULL; index++)
+	{
+		free(arguments[index]);
+	}
+	free(arguments);
 }
