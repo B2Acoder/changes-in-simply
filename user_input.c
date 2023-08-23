@@ -5,6 +5,7 @@
  * @input_size: Argument
  * Return: input
  */
+
 char *read_user_input(size_t *input_size)
 {
 	char *input_line = NULL;
