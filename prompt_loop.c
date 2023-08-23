@@ -4,6 +4,7 @@
  * prompt_loop - Loops the function
  * Return: 0
  */
+
 int prompt_loop(void)
 {
 	char *input_line;
