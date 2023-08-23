@@ -5,6 +5,7 @@
  *
  * Return: void
  */
+
 void shell_exit(void)
 {
 	exit(EXIT_SUCCESS);
