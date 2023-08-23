@@ -8,31 +8,40 @@
  */
 char **tokenize_commandargs(char *command)
 {
-	char **arguments = malloc(sizeof(char *) * (MAX_ARGS + 1));
-	char *token = strtok(command, " ");
-	/*tokenize the command stirng using space as the delimiter*/
-	char argIndex = 0; /*initialize an index for the args array*/
+	 int bufsize = MAX_ARGS;
+	 int position = 0;
+	 char **tokens = malloc(bufsize * sizeof(char*));
+	 char *token;
 
-	if (arguments == NULL)
-	{
-		perror("Memory allocation error");
-		exit(EXIT_FAILURE);
-	}
+	 if (!tokens)
+	 {
+		 perror("malloc error");
+		 exit(EXIT_FAILURE);
+	 }
 
-	while (token != NULL && argIndex < MAX_ARGS)
-		/*the loop goes through the tokens*/
-	{
-		arguments[argIndex] = strdup(token);
-		/*duplicates the token and stores it in the args array*/
-		if (arguments[argIndex] == NULL)
-		{
-			perror("Memory allocation error");
-			exit(EXIT_FAILURE);
-		}
-		argIndex++;/*ncrement the next index in the arg array*/
-		token = strtok(NULL, " "); /*we get the next token in the command string*/
-	}
-	arguments[argIndex] = NULL; /*terminates the args array with NULL pointer*/
-	return (arguments); /*returns the array of arguments*/
+	 token = strtok(command, " \t\n\r\a");
+
+	 while (token != NULL)
+	 {
+		 printf("Debug: Token found: %s\n", token);
+		 tokens[position] = token;
+		 position++;
+
+		 if (position >= bufsize)
+		 {
+			 bufsize += MAX_ARGS;
+			 tokens = realloc(tokens, bufsize * sizeof(char*));
+			 if (!tokens)
+			 {
+				 perror("realloc error");
+				 exit(EXIT_FAILURE);
+			 }
+		 }
+
+		 token = strtok(NULL, " \t\n\r\a");
+	 }
+
+	 tokens[position] = NULL;
+
+	 return (tokens);
 }
-

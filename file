@@ -9,10 +9,10 @@ bool file_exists(const char *p)
 {
 	if (access(p, F_OK) == 0)
 	{
-		return true;
+		return (true);
 	}
 	else
 	{
-		return false;
+		return (false);
 	}
 }

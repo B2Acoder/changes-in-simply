@@ -2,27 +2,21 @@
 
 /**
  * user_readinput - This function reads user input.
- *
+ * @input_size: Argument
  * Return: input
  */
-char *user_readinput(void)
+char *read_user_input(size_t *input_size)
 {
-	char *input = NULL;
-	size_t input_size = 0;
-	ssize_t read_size;
+	char *input_line = NULL;
+	size_t read_size;
 
-	read_size = getline(&input, &input_size, stdin);
+	read_size = getline(&input_line, input_size, stdin);
 
-	if (read_size == -1)
+	if (read_size == (size_t)-1)
 	{
-		free(input);
-		return (NULL);
+		perror("Error");
+		exit(EXIT_FAILURE);
 	}
 
-	if (input[read_size - 1] == '\n')
-	{
-		input[read_size - 1] = '\0';
-	}
-
-	return (input);
+	return (input_line);
 }
