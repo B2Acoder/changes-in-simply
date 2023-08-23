@@ -6,6 +6,7 @@
  * @args: The array of arguments to be freed
  * Return: void
  */
+
 void free_arguments(char **args)
 {
 	int index;
