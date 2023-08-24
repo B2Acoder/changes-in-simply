@@ -5,13 +5,30 @@
  *
  * Return: Always 0
  */
-volatile sig_atomic_t is_process_running = 0;
-
 int main(void)
 {
-	signal(SIGINT, sigint_handler);
+	char *command;
 
-	prompt_loop();
+	while (1)
+	{
+		prompt_design();
+		command = read_user_input();
 
-	return (0);
+		if (command == NULL)
+		{
+			printf("\n");
+			break;
+		}
+
+		if (strcmp(command, "exit") == 0)
+		{
+			free(command);
+			break;
+		}
+
+		execute_command(command);
+		free(command);
+	}
+
+	return (EXIT_SUCCESS);
 }

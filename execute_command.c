@@ -1,56 +1,63 @@
 #include "shell.h"
 
 /**
- * execute_executable - This function forks a new process, using 'execve'
- *			to execute the provided executable path and waiting
- *				for the child process to complete.
- * @executable_path: The path to the executable
- * @args: The array of arguments for the executable
- * Return: (void)
+ * execute_command - This function executes commands
+ *
+ * @command: Command to execute
+ * Return: 0 (SUCCESS)
  */
-void execute_executable(char *executable_path, char **args)
+int execute_command(char *command)
 {
 	pid_t childprocess;
-	int i;
-	int status;
 
-	is_process_running = 1;
+	char *command_name = strtok(command, " ");
+	char *full_path = check_command_existence(command_name);
+
+	command[strcspn(command, "\n")] = '\0';
+
 	childprocess = fork();
 
 	if (childprocess < 0)
 	{
-		perror("Fork error");
-		free(executable_path);
-		free_arguments(args);
-		exit(EXIT_FAILURE);
+		perror("fork");
 	}
 
 	else if (childprocess == 0)
 	{
-		if (execve(executable_path, args, environ) == -1)
+		if (full_path)
 		{
-			perror("</3: execve error");
+			char *argv[MAX_ARGS];
+			char *envp[] = {NULL};
+
+			int argc = 0;
+			char *token = strtok(command, " ");
+
+			while (token != NULL && argc < MAX_ARGS - 1)
+			{
+				argv[argc++] = token;
+				token = strtok(NULL, " ");
+			}
+
+			argv[argc] = NULL;
+
+			if (execve(full_path, argv, envp) == -1)
+			{
+				perror("</3 ");
+				exit(EXIT_FAILURE);
+			}
 		}
 
-		free(executable_path);
-		free_arguments(args);
-		exit(EXIT_FAILURE);
+		else
+		{
+			printf("Command not found: %s\n", command_name);
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	else
 	{
-		wait(&status);
+		wait(NULL);
 	}
 
-	printf("Debug: Executable path: %s\n", executable_path);
-	printf("Debug: Arguments:\n");
-
-	for (i = 0; args[i] != NULL; i++)
-	{
-		printf("  %d: %s\n", i, args[i]);
-	}
-
-	is_process_running = 0;
-	free(executable_path);
-	free_arguments(args);
+	return (EXIT_SUCCESS);
 }
