@@ -7,8 +7,15 @@
  */
 int prompt_design(void)
 {
-	char *prompt = "<3 ";
+	if ((isatty(STDIN_FILENO) == 1) && (isatty(STDOUT_FILENO) == 1))
+	{
+		flags.interactive = 1;
+	}
 
-	write(STDOUT_FILENO, prompt, 3);
+	if (flags.interactive)
+	{
+		write(STDERR_FILENO, "<3 ", 3);
+	}
+
 	return (0);
 }

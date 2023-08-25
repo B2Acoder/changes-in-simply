@@ -9,42 +9,49 @@
  */
 int main(int argc, char **argv, char *envp[])
 {
-	char *user_input = NULL;
-	char *full_command_path = NULL;
-	size_t input_buffer_size = 0;
-	ssize_t input_length = 0;
-	char **command_args = NULL;
-	char **path_directories = NULL;
-	(void)argc, (void)argv;
-	signal(SIGNIT, handle_imode);
-
-	while (1);
+	char *line = NULL, *pathcommand = NULL, *path = NULL;
+	size_t bufsize = 0;
+	ssize_t linesize = 0;
+	char **command = NULL, **paths = NULL;
+	(void)envp, (void)argv;
+	
+	if (argc < 1)
+		return (-1);
+	signal(SIGINT, handle_imode);
+	
+	while (1)
 	{
-		release_mem(cmd_args);
-		release_mem(directories);
-		free(full_path);
-
+		release_mem(command);
+		release_mem(paths);
+		free(pathcommand);
 		prompt_design();
-
-		input_length = read_user_input(&input_line, &buffer_size);
-		if(input_length < 0)
+		linesize = getline(&line, &bufsize, stdin);
+		
+		if (linesize < 0)
 			break;
-		cmd_args = tokenize_path(input_line);
-
-		if (cmd_args == NULL || CMD_ARGS[0] == NULL || cmd_args[0][0] == '\0')
+		info.ln_count++;
+		
+		if (line[linesize - 1] == '\n')
+			line[linesize - 1] = '\0';
+		command = tokenizer(line);
+		
+		if (command == NULL || *command == NULL || **command == '\0')
 			continue;
-		if(exe_builtin(cmd_args, input_line))
+		
+		if (check_command_existence(command, line))
 			continue;
-		char *path = find_path_in_env(envp);
-		directories = tokenize_path(path, ':');
-		full_path = check_command_existence(comd_args[0], directories);
-		if (!full_path)
+		
+		path = find_path_in_env();
+		paths = tokenizer(path);
+		pathcommand = test_path(paths, command[0]);
+		
+		if (!pathcommand)
 			perror(argv[0]);
 		else
-			exe_command(full_path, cmd_args);
+			exe_command(pathcommand, command);
 	}
-	if (input_length < 0)
+	if (linesize < 0 && flags.interactive)
 		write(STDERR_FILENO, "\n", 1);
-	free(input_line);
+	free(line);
 	return (0);
 }

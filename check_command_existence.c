@@ -1,26 +1,18 @@
 #include "shell.h"
-
 /**
- * check_command_existence - Check if a command exists in PATH
- *
- * @command: Command to check
- * @directories:
- * Return: 1 if exists, 0 otherwise
+ *checker- checks to see weather its a built in function
+ *@cmd: tokenized user input
+ *@buf: line drived fromgetline function
+ *Return: 1 if cmd excuted 0 if cmd is not executed
  */
-char *check_command_existence(char *command)
+int check_command_existence(char **cmd, char *buf)
 {
-    int index = 0;
-    char *path = getenv("PATH");
-    char *directories[MAX_DIRS];
-    int num_dirs = tokenize_path(path, ':');
-
-    for (index = 0; index < num_dirs; index++)
-    {
-        char *full_path = create_full_path(directories[index], command);
-        if (access(full_path, X_OK) == 0)
-        {
-            return full_path;
-        }
-    }
-    return NULL;
+	if (exe_builtin(cmd, buf))
+		return (1);
+	else if (**cmd == '/')
+	{
+		exe_command(cmd[0], cmd);
+		return (1);
+	}
+	return (0);
 }

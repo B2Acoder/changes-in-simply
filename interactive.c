@@ -6,12 +6,12 @@
  *
  * Description: manages signals and keeps track of imode and prints
  * a prompt after receiving a signal
+ * Return: void
  */
 
 void handle_imode(int sig_num)
 {
-	UNUSED(sig_num);
+	(void)sig_num;
 	write(STDERR_FILENO, "\n", 1);
 	write(STDERR_FILENO, "<3", 2);
 }
-

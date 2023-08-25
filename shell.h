@@ -15,28 +15,45 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <time.h>
+#include <stdarg.h>
 
 extern char **environ;
+extern __sighandler_t signal(int __sig, __sighandler_t __handler);
+
+struct info
+{
+	int final_exit;
+	int ln_count;
+} info;
+
+struct flags
+{
+	bool interactive;
+} flags;
 
 int prompt_design(void);
 char *read_user_input(void);
-int tokenize_path(char *path, char delimiter);
+char **tokenize_path(char *path, char delimiter);
 char *create_full_path(char *directory, char *command);
-char *check_command_existence(char *command);
+int check_command_existence(char **cmd, char *buf);
 void env_builtin(void);
-char *build_full_cmnd(char *p, char cmd);
+char *build_full_cmnd(char *p, char *cmd);
 int exe_builtin(char **cmd_args, char *input_line);
 void exe_command(char *cmd_path, char **cmd_args);
-char *find_path_in_en(void);
+char *find_path_in_env(void);
 int _stringlen(char *s);
 char *_stringcat(char *dest, char *src);
 int _stringcmp(const char *s1, const char *s2);
 char *_stringchr(char *s, char c);
 unsigned int _stringspn(char *s, char *accept);
+int _strncmp(char *s1, char *s2, int n);
+char *_stringdup(char *s);
 void handle_imode(int sig_num);
 void release_mem(char ** memory_buff);
-void shell_exit(void);
+void shell_exit(char **cmd, char *inputline);
 int main(int argc, char **argv, char *envp[]);
-
+char **tokenizer(char *line);
+char *test_path(char **path, char *command);
 
 #endif

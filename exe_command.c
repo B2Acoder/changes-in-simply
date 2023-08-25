@@ -16,15 +16,15 @@ void exe_command(char *cmd_path, char **cmd_args)
 
 	if (childprocess_pid < 0)
 	{
-		perror("fork")
+		perror("fork");
 	}
 	if (childprocess_pid == 0)
 	{
-		execve(cmd_path, cmd_args, environment_ar);
+		execve(cmd_path, cmd_args, environment_var);
 		perror("execve");
 
-		free(cmd_paths);
-		free_cmd_args(cmd_args);
+		free(cmd_path);
+		release_mem(cmd_args);
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -32,4 +32,3 @@ void exe_command(char *cmd_path, char **cmd_args)
 		wait(&child_status);
 	}
 }
-

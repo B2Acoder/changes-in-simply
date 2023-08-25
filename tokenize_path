@@ -7,32 +7,32 @@
  * @delimter: Array to store directories
  * Return: Number of directories
  */
-int tokenize_path(char *path, char delimiter)
+char **tokenize_path(char *path, char delimiter)
 {
 	int num_tokens = 0;
 	char *token = strtok(path, &delimiter);
-	char **tokens = NULL
+	char **tokens = NULL;
 
 	while (token != NULL)
 	{
 		tokens = realloc(token, sizeof(char *) * (num_tokens + 1));
 		if (tokens == NULL)
 		{
-			return NULL;
+			return (NULL);
 		}
 		tokens[num_tokens++] = _stringdup(token);
 		if (tokens[num_tokens - 1] == NULL)
 		{
-			return NULL;
+			return (NULL);
 		}
 		token = strtok(NULL, &delimiter);
 	}
 	tokens = realloc(tokens, sizeof(char *) * (num_tokens + 1));
 	if (tokens == NULL)
 	{
-		return NULL;
+		return (NULL);
 	}
 	tokens[num_tokens] = NULL;
 
-	return tokens;
+	return (tokens);
 }

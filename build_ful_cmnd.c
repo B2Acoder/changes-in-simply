@@ -10,22 +10,28 @@
 char *build_full_cmnd(char *p, char *cmd)
 {
 	char *result_buffer;
-	size_t result_size;
 	size_t path_index = 0, command_index = 0;
 
 	if (cmd == 0)
 		cmd = "";
+	
 	if (p == 0)
 		p = "";
-	result_size = _stringlen(p) + _stringlen(cmd) + 2;
-
-	result_buffer = malloc(sizeof(char) * result_size);
+	
+	result_buffer = malloc(sizeof(char) * (_stringlen(p) + _stringlen(cmd) + 2));
 
 	if (!result_buffer)
-		return NULL;
+		return (NULL);
+
 	while (p[path_index])
 	{
 		result_buffer[path_index] = p[path_index];
+		path_index++;
+	}
+
+	if (p[path_index - 1] != '/')
+	{
+		result_buffer[path_index] = '/';
 		path_index++;
 	}
 

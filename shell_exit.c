@@ -2,11 +2,15 @@
 
 /**
  * shell_exit - This function exits the shell
+ * @cmd: tokenized command
+ * @inputline: input read from stdin
  *
  * Return: void
  */
 
-void shell_exit(void)
+void shell_exit(char **cmd, char *inputline)
 {
-        exit(EXIT_SUCCESS);
+        free(inputline);
+	release_mem(cmd);
+	exit(0);
 }
