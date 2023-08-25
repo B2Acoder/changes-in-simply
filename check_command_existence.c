@@ -4,6 +4,7 @@
  * check_command_existence - Check if a command exists in PATH
  *
  * @command: Command to check
+ * @directories:
  * Return: 1 if exists, 0 otherwise
  */
 char *check_command_existence(char *command)
@@ -11,7 +12,7 @@ char *check_command_existence(char *command)
     int index = 0;
     char *path = getenv("PATH");
     char *directories[MAX_DIRS];
-    int num_dirs = tokenize_path(path, directories);
+    int num_dirs = tokenize_path(path, ':');
 
     for (index = 0; index < num_dirs; index++)
     {
