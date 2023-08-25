@@ -25,8 +25,10 @@ int main(void)
 			free(command);
 			break;
 		}
-
-		execute_command(command);
+		if (execute_command(command) != 0)
+		{
+			printf("Error executing command: %s\n", command);
+		}
 		free(command);
 	}
 

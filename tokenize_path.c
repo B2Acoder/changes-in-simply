@@ -4,19 +4,35 @@
  * tokenize_path - Tokenize the PATH environment variables
  *
  * @path: PATH environment variables
- * @directories: Array to store directories
+ * @delimter: Array to store directories
  * Return: Number of directories
  */
-int tokenize_path(char *path, char *directories[])
+int tokenize_path(char *path, char delimiter)
 {
-	int num_dirs = 0;
-	char *token = strtok(path, ":");
+	int num_tokens = 0;
+	char *token = strtok(path, &delimiter);
+	char **tokens = NULL
 
 	while (token != NULL)
 	{
-		directories[num_dirs++] = token;
-		token = strtok(NULL, ":");
+		tokens = realloc(token, sizeof(char *) * (num_tokens + 1));
+		if (tokens == NULL)
+		{
+			return NULL;
+		}
+		tokens[num_tokens++] = _stringdup(token);
+		if (tokens[num_tokens - 1] == NULL)
+		{
+			return NULL;
+		}
+		token = strtok(NULL, &delimiter);
 	}
+	tokens = realloc(tokens, sizeof(char *) * (num_tokens + 1));
+	if (tokens == NULL)
+	{
+		return NULL;
+	}
+	tokens[num_tokens] = NULL;
 
-	return (num_dirs);
+	return tokens;
 }
