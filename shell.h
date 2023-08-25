@@ -21,12 +21,23 @@
 extern char **environ;
 extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 
+/**
+ * @struct info
+ * Structure to hold information about the programs state
+ * 
+ */
 struct info
 {
-	int final_exit;
-	int ln_count;
+	int final_exit;/*stores the programs exit status*/
+	int ln_count;/*keeps track of line counts*/
 } info;
-
+/**
+ * @struct flags
+ * Structure to hold flags indicating program behavior
+ *
+ * The 'interactive' flag can be used to determine whether the program
+ * is running in imode
+ */
 struct flags
 {
 	bool interactive;
@@ -50,7 +61,7 @@ unsigned int _stringspn(char *s, char *accept);
 int _strncmp(char *s1, char *s2, int n);
 char *_stringdup(char *s);
 void handle_imode(int sig_num);
-void release_mem(char ** memory_buff);
+void release_mem(char **memory_buff);
 void shell_exit(char **cmd, char *inputline);
 int main(int argc, char **argv, char *envp[]);
 char **tokenizer(char *line);

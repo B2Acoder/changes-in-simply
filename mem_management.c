@@ -5,7 +5,7 @@
  * allocated memory for a buffer
  * @memory_buff: the buff to be deallocated
  */
-void release_mem(char ** memory_buff)
+void release_mem(char **memory_buff)
 {
 	int index = 0;
 

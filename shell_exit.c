@@ -10,7 +10,7 @@
 
 void shell_exit(char **cmd, char *inputline)
 {
-        free(inputline);
+	free(inputline);
 	release_mem(cmd);
 	exit(0);
 }

@@ -14,10 +14,8 @@ char *build_full_cmnd(char *p, char *cmd)
 
 	if (cmd == 0)
 		cmd = "";
-	
 	if (p == 0)
 		p = "";
-	
 	result_buffer = malloc(sizeof(char) * (_stringlen(p) + _stringlen(cmd) + 2));
 
 	if (!result_buffer)

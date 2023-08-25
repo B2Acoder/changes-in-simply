@@ -1,17 +1,17 @@
 #include "shell.h"
 
 /**
- * exe_builtins - this functions executes builtins commands
+ * exe_builtin - this functions executes builtins commands
  * @cmd_args: this is the tokenized cmds
  * @input_line: this inputs read from stdin
- * Returns: 1 if builtin command is executed and 0 if otherwise
+ * Return: 1 if builtin command is executed and 0 if otherwise
  */
 int exe_builtin(char **cmd_args, char *input_line)
 {
 	char *builtin_cmnds[NUM_BUILTIN_CMNDS] = {"env", "exit"};
 	int command_i;
 
-	for(command_i = 0; command_i < NUM_BUILTIN_CMNDS; command_i++)
+	for (command_i = 0; command_i < NUM_BUILTIN_CMNDS; command_i++)
 	{
 		if (_stringcmp(*cmd_args, builtin_cmnds[command_i]) == 0)
 		{

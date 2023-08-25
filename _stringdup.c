@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
-* _strdup - dupicates string
-* @s: to be duplicated
-*
-* Return: pointer to duplicate string
-*/
+ * _stringdup - dupicates string
+ * @s: to be duplicated
+ *
+ * Return: pointer to duplicate string
+ */
 char *_stringdup(char *s)
 {
 	char *ptr;

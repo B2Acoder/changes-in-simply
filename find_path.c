@@ -8,7 +8,7 @@
  */
 char *find_path_in_env(void)
 {
-	int char_index = 0; 
+	int char_index = 0;
 	char **environment_variables = environ, *path_variable = NULL;
 
 	while (*environment_variables)
@@ -16,7 +16,7 @@ char *find_path_in_env(void)
 		if (_strncmp(*environment_variables, "PATH=", 5) == 0)
 		{
 			path_variable = *environment_variables;
-			while(*path_variable && char_index < 5)
+			while (*path_variable && char_index < 5)
 			{
 				path_variable++;
 				char_index++;

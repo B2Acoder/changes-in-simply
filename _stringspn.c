@@ -10,22 +10,22 @@
 
 unsigned int _stringspn(char *s, char *accept)
 {
-        unsigned int byteCount = 0;
-        int acceptPos;
+	unsigned int byteCount = 0;
+	int acceptPos;
 
-        while (*s)
-        {
-                for (acceptPos = 0; accept[acceptPos]; acceptPos++)
-                {
-                        if (*s == accept[acceptPos])
-                        {
-                                byteCount++;
-                                break;
-                        }
-                        else if (accept[acceptPos + 1] == '\0')
-                                return (byteCount);
-                }
-                s++;
-        }
-        return (byteCount);
+	while (*s)
+	{
+		for (acceptPos = 0; accept[acceptPos]; acceptPos++)
+		{
+			if (*s == accept[acceptPos])
+			{
+				byteCount++;
+				break;
+			}
+			else if (accept[acceptPos + 1] == '\0')
+				return (byteCount);
+		}
+		s++;
+	}
+	return (byteCount);
 }
