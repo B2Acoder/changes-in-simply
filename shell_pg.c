@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /*
- * main - Entry point
+ * main - Entry point for custom shell program
  * @argc: Argument count
  * @argv: argument vector
  * @envp: evnironment vextor
@@ -48,11 +48,11 @@ int main(int argc, char **argv, char *envp[])
 		if (!pathcommand)
 			perror(argv[0]);
 		else
-			exe_command(pathcommand,
-					command);
+			exe_command
+				(pathcommand, ommand);
 	}
-	if (linesize < 0 &&
-			flags.interactive)
+	if (linesize
+			< 0 && flags.interactive)
 		write(STDERR_FILENO,
 				"\n", 1);
 	free(line);

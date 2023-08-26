@@ -1,6 +1,6 @@
 #ifndef SHELL_H
 #define SHELL_H
-
+#define BUFFER_SIZE 1024
 #define MAX_ARGS 64
 #define MAX_DIRS 100
 #define NUM_BUILTIN_CMNDS 3
@@ -21,23 +21,12 @@
 extern char **environ;
 extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 
-/**
- * @struct info
- * Structure to hold information about the programs state
- * 
- */
 struct info
 {
 	int final_exit;/*stores the programs exit status*/
 	int ln_count;/*keeps track of line counts*/
 } info;
-/**
- * @struct flags
- * Structure to hold flags indicating program behavior
- *
- * The 'interactive' flag can be used to determine whether the program
- * is running in imode
- */
+
 struct flags
 {
 	bool interactive;
@@ -66,5 +55,5 @@ void shell_exit(char **cmd, char *inputline);
 int main(int argc, char **argv, char *envp[]);
 char **tokenizer(char *line);
 char *test_path(char **path, char *command);
-
+ssize_t my_getline(char *line, size_t size);
 #endif

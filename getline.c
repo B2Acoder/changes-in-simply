@@ -1,5 +1,9 @@
 #include "shell.h"
 
+static char buffer[BUFFER_SIZE];
+static size-t buffer_position = 0;
+static size buffer_size = 0;
+
 /**
  * my_getline - read input characters into a buffer until a newline
  * character is encountered
@@ -16,7 +20,7 @@ ssize_t my_getlin(char *line size_t size)
 	while (true)
 	{
 
-	if (buffeer_position >= buffer_size)
+	if (buffer_position >= buffer_size)
 	{
 		bytes_read = read(STDIN_FILENO, buffer BUFFER_SIZE);
 	if (bytes_read <= 0)
